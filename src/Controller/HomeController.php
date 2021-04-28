@@ -28,8 +28,10 @@ class HomeController extends AbstractController
             $this->addFlash('success', "Compte utilisateur initialisé avec succès!");
         }
 
+        if (!$this->getUser()) return $this->redirectToRoute('app_login');
+
         return $this->render('home/index.html.twig', [
-            'menu' => 'Dashbord',
+            'menu' => 'dashboard',
             'sub_menu' => 'Accueil'
         ]);
     }
