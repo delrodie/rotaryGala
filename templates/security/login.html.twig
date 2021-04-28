@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label class="d-flex justify-content-between">
                                 <span>{% trans %}Password{% endtrans %}</span>
-                                <a href="#" class="tx-13">{% trans %}Forgot password?{% endtrans %}</a>
+                                <a href="{{ path('app_reset_password', {'token': 'x'}) }}" class="tx-13">{% trans %}Forgot password?{% endtrans %}</a>
                             </label>
                             <input type="password" name="password" id="inputPassword" class="form-control" required>
                         </div>
