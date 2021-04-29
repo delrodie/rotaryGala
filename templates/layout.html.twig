@@ -55,8 +55,7 @@
             <li class="nav-item {% if menu == 'admin' %}show{% endif %}">
                 <a href="#" class="nav-link with-sub {% if menu == 'admin' %}active{% endif %}"><i data-feather="layers"></i> Administration</a>
                 <nav class="nav nav-sub">
-                    <a href="#" class="nav-sub-link {% if sub_menu == 'user' %} active{% endif %}">Utilisateur</a>
-                    <a href="#" class="nav-sub-link">Newsletter</a>
+                    <a href="{{ path('admin_user_index') }}" class="nav-sub-link {% if sub_menu == 'usermenu' %} active{% endif %}">Utilisateur</a>
                 </nav>
             </li>
         </ul>

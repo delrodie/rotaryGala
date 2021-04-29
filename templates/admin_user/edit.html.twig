@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} Gestion des utilisateurs{% endblock %}
+
+
+{% block body %}
+    <h4 class="content-title">
+        Gestion des utilisateurs
+    </h4>
+    <p>
+        L'interface de <strong>Gestion des utilisateurs</strong> permet d'ajouter, de modifier et de supprimer les utilisateurs dans le système.
+    </p>
+    <div class="row">
+        <div class="col text-right">
+            <a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary">
+                <i class="fa fa-list"></i> Liste
+            </a>
+        </div>
+    </div>
+    <div class="component-section no-code">
+        <h5 id="section1" class="tx-semibold">Formulaire d'enregistrement</h5>
+        <p class="mg-b-25"></p>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible mg-b-25 fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ include('admin_user/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+        {{ include('admin_user/_delete_form.html.twig') }}
+    </div>
+
+{% endblock %}
+

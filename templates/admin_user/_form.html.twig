@@ -1,0 +1,34 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-10 offset-md-1 form-group">
+            <div class="row">
+                <div class="col-md-12">{{ form_row(form.email) }}</div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">{{ form_row(form.username) }}</div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">{{ form_row(form.password) }}</div>
+            </div>
+            <div class="row mt-3">
+                <span class="tx-semibold">Roles</span>
+                <div class="col-md-12">
+                    <div class="custom-control custom-checkbox">
+                        {{ form_widget(form.roles.0) }}
+                        {{ form_label(form.roles.0) }}
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        {{ form_widget(form.roles.1) }}
+                        {{ form_label(form.roles.1) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ form_widget(form) }}
+    <div class="text-right mt-5">
+        <a href="{{ path('admin_user_index') }}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+
+{{ form_end(form) }}
