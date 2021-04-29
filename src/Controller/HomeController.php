@@ -22,6 +22,7 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        //dd($this->utils->connexion());
         $verif = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=>'delrodie']);
         if (!$verif){
             $this->utils->initalisationUser();

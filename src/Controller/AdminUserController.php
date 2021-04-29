@@ -31,6 +31,7 @@ class AdminUserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        //dd($this->getUser());
         return $this->render('admin_user/index.html.twig', [
             'users' => $userRepository->findListWithoutDelrodie(),
             'menu' =>self::menu,

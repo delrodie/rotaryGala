@@ -39,6 +39,16 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $connexion;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastconnectedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +133,30 @@ class User implements UserInterface
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getConnexion(): ?int
+    {
+        return $this->connexion;
+    }
+
+    public function setConnexion(?int $connexion): self
+    {
+        $this->connexion = $connexion;
+
+        return $this;
+    }
+
+    public function getLastconnectedAt(): ?\DateTimeInterface
+    {
+        return $this->lastconnectedAt;
+    }
+
+    public function setLastconnectedAt(?\DateTimeInterface $lastconnectedAt): self
+    {
+        $this->lastconnectedAt = $lastconnectedAt;
 
         return $this;
     }
