@@ -8,7 +8,7 @@
 
         <div class="signin-sidebar">
             <div class="signin-sidebar-body">
-                <a href="dashboard-one.html" class="sidebar-logo mg-b-40"><span>Rotary Abidjan Bietry</span></a>
+                <a href="{{ path('app_home') }}" class="sidebar-logo mg-b-40"><span>Rotary Abidjan Bietry</span></a>
                 <h4 class="signin-title">{% trans %}Welcome back!{% endtrans %}</h4>
 
                 <form method="post">
@@ -23,6 +23,16 @@
                     {% endif %}
 
                     <h5 class="signin-subtitle">{% trans %}Please sign in{% endtrans %}</h5>
+                    {% for label, messages in app.flashes(['success', 'warning']) %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible mg-b-0 fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     <div class="signin-form">
                         <div class="form-group">
                             <label for="inputUsername">{% trans %}Username{% endtrans %}</label>
