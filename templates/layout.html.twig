@@ -39,7 +39,7 @@
             <li class="nav-item"><a href="#" class="nav-link"><i data-feather="shopping-bag"></i> vente</a></li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a href="#" class="nav-link {% if menu == 'metier' %}active{% endif %}"><i data-feather="users"></i> Invitants</a>
+                    <a href="{{ path('admin_invitant_index') }}" class="nav-link {% if menu == 'invitant' %}active{% endif %}"><i data-feather="users"></i> Invitants</a>
                 </li>
                 <li class="nav-item {% if menu == 'gestion' %}show{% endif %}">
                     <a href="#" class="nav-link with-sub"><i data-feather="box"></i> Gestion</a>

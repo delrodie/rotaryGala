@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+<div class="row form-group">
+    <div class="col-md-6">{{ form_row(form.nom) }}</div>
+    <div class="col-md-6">{{ form_row(form.prenoms) }}</div>
+    <div class="col-md-6 mt-3">{{ form_row(form.contact) }}</div>
+    <div class="col-md-6 mt-3">{{ form_row(form.user) }}</div>
+</div>
+
+{{ form_widget(form) }}
+    <div class="text-right mt-5">
+        <a href="{{ path('admin_invitant_index') }}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}

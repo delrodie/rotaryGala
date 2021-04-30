@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invitant{% endblock %}
+
+{% block body %}
+    <h1>Invitant</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ invitant.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ invitant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenoms</th>
+                <td>{{ invitant.prenoms }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ invitant.contact }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_invitant_index') }}">back to list</a>
+
+    <a href="{{ path('admin_invitant_edit', {'id': invitant.id}) }}">edit</a>
+
+    {{ include('admin_invitant/_delete_form.html.twig') }}
+{% endblock %}
