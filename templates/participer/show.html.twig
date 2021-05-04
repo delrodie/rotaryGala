@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participer{% endblock %}
+
+{% block body %}
+    <h1>Participer</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participer.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ participer.type }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ participer.montant }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ participer.place }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ participer.createdAt ? participer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ participer.updatedAt ? participer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>User</th>
+                <td>{{ participer.user }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('participer_index') }}">back to list</a>
+
+    <a href="{{ path('participer_edit', {'id': participer.id}) }}">edit</a>
+
+    {{ include('participer/_delete_form.html.twig') }}
+{% endblock %}

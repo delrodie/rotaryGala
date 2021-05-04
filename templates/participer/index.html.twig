@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participer index{% endblock %}
+
+{% block body %}
+    <h1>Participer index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>Place</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>User</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participer in participers %}
+            <tr>
+                <td>{{ participer.id }}</td>
+                <td>{{ participer.type }}</td>
+                <td>{{ participer.montant }}</td>
+                <td>{{ participer.place }}</td>
+                <td>{{ participer.createdAt ? participer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participer.updatedAt ? participer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participer.user }}</td>
+                <td>
+                    <a href="{{ path('participer_show', {'id': participer.id}) }}">show</a>
+                    <a href="{{ path('participer_edit', {'id': participer.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('participer_new') }}">Create new</a>
+{% endblock %}

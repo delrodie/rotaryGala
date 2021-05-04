@@ -19,6 +19,13 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
+    public function liste()
+    {
+        $this->createQueryBuilder('t')
+            ->where('t.statut is null')
+            ;
+    }
+
     // /**
     //  * @return Ticket[] Returns an array of Ticket objects
     //  */
