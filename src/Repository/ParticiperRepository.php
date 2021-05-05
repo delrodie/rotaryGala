@@ -19,8 +19,9 @@ class ParticiperRepository extends ServiceEntityRepository
         parent::__construct($registry, Participer::class);
     }
 
-
-
+    /**
+     * @return int|mixed|string
+     */
     public function findList()
     {
         return $this->createQueryBuilder('p')
@@ -29,6 +30,22 @@ class ParticiperRepository extends ServiceEntityRepository
             ->leftJoin('p.ticket', 't')
             ->leftJoin('p.participant', 'i')
             ->getQuery()->getResult()
+            ;
+    }
+
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneByTicket($code)
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('t')
+            ->addSelect('i')
+            ->leftJoin('p.ticket', 't')
+            ->leftJoin('p.participant', 'i')
+            ->where('t.code = :code')
+            ->setParameter('code', $code)
+            ->getQuery()->getOneOrNullResult()
             ;
     }
 
