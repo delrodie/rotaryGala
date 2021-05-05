@@ -33,4 +33,27 @@ class InstallationController extends AbstractController
             'invite' => $invite
         ]);
     }
+
+    /**
+     * @Route("/{ticket}/new/", name="installation_new", methods={"GET"})
+     */
+    public function new($ticket) : Response
+    {
+        $invite = $this->getDoctrine()->getRepository(Participer::class)->findOneByTicket($ticket);
+
+        if (!$invite){
+            $this->addFlash('danger', "Ce ticket n'a pas encore été affecté pour installer l'invité");
+            $invite = [];
+        }else{
+            $invite->setInstall(true);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', "Installation effectuée avec succès!");
+        }
+
+        return $this->render('installation/index.html.twig', [
+            'menu' => self::menu,
+            'sub_menu' => self::sub_menu,
+            'invite' => $invite
+        ]);
+    }
 }

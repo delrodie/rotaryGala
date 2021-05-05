@@ -58,6 +58,11 @@ class Participer
      */
     private $participant;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $install;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Participer
     public function setParticipant(?Participant $participant): self
     {
         $this->participant = $participant;
+
+        return $this;
+    }
+
+    public function getInstall(): ?bool
+    {
+        return $this->install;
+    }
+
+    public function setInstall(?bool $install): self
+    {
+        $this->install = $install;
 
         return $this;
     }

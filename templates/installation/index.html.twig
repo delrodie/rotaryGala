@@ -40,14 +40,20 @@
                                             <span>Table</span>
                                         </div>
                                         <div>
-                                            <h6><span class="badge badge-danger">NON</span></h6>
+                                            <h6>
+                                                {% if invite.install %}
+                                                    <span class="badge badge-success"><span class="text-white">OUI</span></span>
+                                                {% else %}
+                                                    <span class="badge badge-danger"><span class="text-white">NON</span></span>
+                                                {% endif %}
+                                            </h6>
                                             <span>Installé</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex">
-                                    {% if invite.place %}
-                                        <a href="#" class="btn btn-white btn-sm flex-fill"><i class="icon ion-plus tx-12 mg-r-2"></i> Installer</a>
+                                    {% if invite.place and invite.install == false %}
+                                        <a href="{{ path('installation_new', {'ticket': invite.ticket.code}) }}" class="btn btn-white btn-sm flex-fill"><i class="icon ion-plus tx-12 mg-r-2"></i> Installer</a>
                                     {% endif %}
 
                                 </div>
