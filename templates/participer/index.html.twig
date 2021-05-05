@@ -1,45 +1,96 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Participer index{% endblock %}
+{% block title %}{{ parent() }} Gestion des tickets{% endblock %}
 
 {% block body %}
-    <h1>Participer index</h1>
+    <h4 class="content-title">
+        Gestion des utilisateurs
+    </h4>
+    <p>
+        L'interface de <strong>Gestion des tickets</strong> permet d'ajouter, de modifier et de supprimer les tickets de l'accueil.
+    </p>
+    <div class="row">
+        <div class="col text-right">
+            <a href="{{ path('admin_invitant_new') }}" class="btn btn-outline-primary">
+                <i class="fa fa-plus-circle"></i> Ajouter
+            </a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Montant</th>
-                <th>Place</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>User</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for participer in participers %}
-            <tr>
-                <td>{{ participer.id }}</td>
-                <td>{{ participer.type }}</td>
-                <td>{{ participer.montant }}</td>
-                <td>{{ participer.place }}</td>
-                <td>{{ participer.createdAt ? participer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ participer.updatedAt ? participer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ participer.user }}</td>
-                <td>
-                    <a href="{{ path('participer_show', {'id': participer.id}) }}">show</a>
-                    <a href="{{ path('participer_edit', {'id': participer.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+        </div>
+    </div>
+    <div class="component-section no-code">
+        <h5 id="section1" class="tx-semibold">Liste des invités</h5>
+        <p class="mg-b-25"></p>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible mg-b-25 fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('participer_new') }}">Create new</a>
+        <table id="userList" class="table">
+            <thead>
+            <tr>
+                <th class="wd-7p text-center">#</th>
+                <th class="wd-10p text-center">TYPES</th>
+                <th class="wd-18p text-center">TICKETS</th>
+                <th class="wd-45p text-center">INVITES</th>
+                <th class="wd-10p text-center">MONTANTS</th>
+                <th class="wd-10p text-center">TABLE</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for liste in listes %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td class="text-center">{{ liste.type }} </td>
+                    <td class="text-center">
+                        <a href="{{ path('participer_edit', {'id': liste.id}) }}">{{ liste.ticket }}</a>
+                    </td>
+                    <td>{{ liste.nom }} {{ liste.prenoms }}</td>
+                    <td class="text-center">{{ liste.montant }}</td>
+                    <td class="text-center">{{ liste.place }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/lib/prismjs/themes/prism-tomorrow.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/lib/datatables.net-dt/css/jquery.dataTables.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('backoffice/lib/select2/css/select2.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('backoffice/lib/prismjs/prism.js')) }}"></script>
+    <script src="{{ absolute_url(asset('backoffice/lib/datatables.net/js/jquery.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('backoffice/lib/datatables.net-dt/js/dataTables.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('backoffice/lib/datatables.net-responsive/js/dataTables.responsive.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('backoffice/lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('backoffice/lib/select2/js/select2.min.js')) }}"></script>
+    <script>
+        $(function(){
+            'use strict'
+
+            $('#userList').DataTable({
+                //responsive: true,
+                language: {
+                    searchPlaceholder: 'Recherche...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ elements/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+        });
+    </script>
 {% endblock %}

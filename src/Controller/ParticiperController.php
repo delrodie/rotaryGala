@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Participer;
+use App\Entity\Ticket;
+use App\Form\ParticiperEditType;
 use App\Form\ParticiperType;
 use App\Repository\ParticiperRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,17 +13,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/participer")
+ * @Route("/admin/participer")
  */
 class ParticiperController extends AbstractController
 {
+    const menu ="gestion";
+    const sub_menu = "affectation";
+
     /**
      * @Route("/", name="participer_index", methods={"GET"})
      */
     public function index(ParticiperRepository $participerRepository): Response
     {
+        $listes = $participerRepository->findList(); //dd($listes);
+        $participers = []; $i=0; $total=0; $couple=0; $invite=0; $gratuit=0;
+        foreach ($listes as $liste){
+            $participers[$i++] = [
+                'nom' => $liste->getParticipant()->getNom(),
+                'prenoms' => $liste->getParticipant()->getPrenoms(),
+                'contact' => $liste->getParticipant()->getContact(),
+                'ticket' => $liste->getTicket()->getCode(),
+                'montant' => $liste->getMontant(),
+                'place' => $liste->getPlace(),
+                'type' => $liste->getType(),
+                'id' => $liste->getId()
+            ];
+            // Calcul du montant total
+            $total = $total+$liste->getMontant();
+        } //dd($participers);
         return $this->render('participer/index.html.twig', [
-            'participers' => $participerRepository->findAll(),
+            'listes' => $participers,
+            'total' => $total,
+            'menu' => self::menu,
+            'sub_menu' => self::sub_menu
         ]);
     }
 
@@ -63,11 +87,17 @@ class ParticiperController extends AbstractController
      */
     public function edit(Request $request, Participer $participer): Response
     {
-        $form = $this->createForm(ParticiperType::class, $participer);
+        $form = $this->createForm(ParticiperEditType::class, $participer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $ticket = $this->getDoctrine()->getRepository(Ticket::class)->findOneBy(['id'=>$request->get('_ticket')]);
+            $participer->setTicket($ticket);
+            $participer->setType($request->get('_type'));
+            $ticket->setPlace($participer->getPlace());
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', "Une table a bien été affectée au ticket ".$ticket->getCode());
 
             return $this->redirectToRoute('participer_index');
         }
@@ -75,6 +105,8 @@ class ParticiperController extends AbstractController
         return $this->render('participer/edit.html.twig', [
             'participer' => $participer,
             'form' => $form->createView(),
+            'menu' => self::menu,
+            'sub_menu' => self::sub_menu
         ]);
     }
 

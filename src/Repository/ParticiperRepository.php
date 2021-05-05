@@ -19,6 +19,19 @@ class ParticiperRepository extends ServiceEntityRepository
         parent::__construct($registry, Participer::class);
     }
 
+
+
+    public function findList()
+    {
+        return $this->createQueryBuilder('p')
+            ->addSelect('t')
+            ->addSelect('i')
+            ->leftJoin('p.ticket', 't')
+            ->leftJoin('p.participant', 'i')
+            ->getQuery()->getResult()
+            ;
+    }
+
     // /**
     //  * @return Participer[] Returns an array of Participer objects
     //  */

@@ -1,4 +1,8 @@
 {{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-sm-6">{{ form_row(form.type) }}</div>
+        <div class="col-sm-6">{{ form_row(form.ticket) }}</div>
+    </div>
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

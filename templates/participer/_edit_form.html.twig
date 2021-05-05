@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-sm-6">{{ form_row(form.type) }}</div>
+        <div class="col-sm-6">{{ form_row(form.ticket) }}</div>
+    </div>
+<div class="row form-group">
+    <div class="col-sm-6">
+        <label for="">Invité</label>
+        <input type="text" class="form-control" value="{{ participer.participant.nom }} {{ participer.participant.prenoms }}" readonly>
+    </div>
+    <div class="col-sm-6">
+        <label for="">Contact</label>
+        <input type="text" class="form-control" value="{{ participer.participant.contact }}" readonly>
+    </div>
+</div>
+<div class="row form-group">
+        <div class="col-sm-6">{{ form_row(form.montant) }}</div>
+        <div class="col-sm-6">{{ form_row(form.place) }}</div>
+    </div>
+{{ form_widget(form) }}
+    <div class="text-right mt-5">
+        <input type="hidden" name="_ticket" value="{{ participer.ticket.id }}">
+        <input type="hidden" name="_type" value="{{ participer.type }}">
+        <a href="{{ path('participer_index') }}" class="btn btn-outline secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}
