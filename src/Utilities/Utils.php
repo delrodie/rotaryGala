@@ -58,4 +58,13 @@ class Utils
 
         return true;
     }
+
+    public function montantTicket($type)
+    {
+        if ($type === 'CP') $montant = 100000;
+        elseif ($type === 'IN') $montant = 150000;
+        else $montant = 0;
+
+        return $montant;
+    }
 }

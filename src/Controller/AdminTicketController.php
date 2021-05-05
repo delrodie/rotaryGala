@@ -20,6 +20,7 @@ class AdminTicketController extends AbstractController
     {
         // S'il n'y a aucun ticket alors generer les tickets
         $tickets = $ticketRepository->findAll();
+        //$tickets = $ticketRepository->liste(); dd($tickets);
 
         if (!$tickets) {
             $this->ticketGenerated();

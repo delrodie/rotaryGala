@@ -21,8 +21,10 @@ class TicketRepository extends ServiceEntityRepository
 
     public function liste()
     {
-        $this->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->where('t.statut is null')
+            //->setParameter('bool', 0)
+            //->getQuery()->getResult()
             ;
     }
 

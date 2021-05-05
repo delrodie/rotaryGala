@@ -53,6 +53,11 @@ class Participer
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="tickets", cascade={"persist","remove"})
+     */
+    private $participant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -156,5 +161,17 @@ class Participer
     public function setUpdatedAtValue()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        return $this;
     }
 }

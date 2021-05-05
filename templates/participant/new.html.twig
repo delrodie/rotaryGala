@@ -1,0 +1,120 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} Gestion des participants{% endblock %}
+
+
+{% block body %}
+    <h4 class="content-title">
+        Gestion des participants
+    </h4>
+    <p>
+        L'interface de <strong>Gestion des participants</strong> permet d'ajouter, de modifier et de supprimer les participants dans le système.
+    </p>
+    <div class="row">
+        <div class="col text-right">
+            <a href="{{ path('participant_index') }}" class="btn btn-outline-primary">
+                <i class="fa fa-list"></i> Liste
+            </a>
+        </div>
+    </div>
+    <div class="component-section no-code">
+        <h5 id="section1" class="tx-semibold">Formulaire d'enregistrement</h5>
+        <p class="mg-b-25"></p>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible mg-b-25 fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ include('participant/_form.html.twig') }}
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+
+        li select{
+            display: block;
+            width: 50%;
+            height: calc(1.5em + 0.874rem + 2px);
+            padding: 0.437rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #454f5b;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #d9dfe7;
+            border-radius: 0;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // setup an "add a tag" link
+        var $addTagLink = $('<a href="#" class="add_item_link btn btn-success"><i class="fa fa-plus-circle"></i> Ajouter un ticket</a>');
+        var $newLinkLi = $('<li></li>').append($addTagLink);
+
+        jQuery(document).ready(function() {
+            // Get the ul that holds the collection of tags
+            var $collectionHolder = $('ul.tickets');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see code block below)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+
+
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-tag"><i class="fa fa-trash mt-3 mb-5"></i></a>');
+
+            $newLinkLi.before($newFormLi);
+
+            // handle the removal, just for this example
+            $('.remove-tag').click(function(e) {
+                e.preventDefault();
+
+                $(this).parent().remove();
+
+                return false;
+            });
+        }
+    </script>
+{% endblock %}
